@@ -7,11 +7,26 @@ var inputname = getInputFile();
 var outputname = getOutputFile();
 
 // open the input file and save its contents
+var data = getData(inputname);
+console.log(data);
+
 // parse the contents of the file into a JSON object
 // save the contents of the file
 
-console.log(inputname);
-console.log(outputname);
+
+/** 
+ * Open the specified file and return its contents.
+ * @param  {file} filename - the name of the file to open and read.
+ * @return {string}          - the contents of the file as a string.
+ */
+function getData(filename) {
+	var datastring = "";
+	datastring = fs.readFileSync(filename, "utf8");
+	if (!datastring) {
+		throw new Error("file could not be read");
+	}
+	return datastring;
+}
 
 
 /** 
