@@ -1,5 +1,6 @@
 "use strict";
 var csv = require("csv");
+var parse = csv.parse;
 var fs = require("fs");
 
 // Get the names of the input and output files
@@ -8,9 +9,25 @@ var outputname = getOutputFile();
 
 // open the input file and save its contents
 var data = getData(inputname);
-console.log(data);
 
 // parse the contents of the file into a JSON object
+var jsonObj = parse(data, {delimiter: "\t"}, function (err, output) {
+	if (err) {
+		throw new Error("There was an issue parsing the file");
+	} else {
+
+		var obj = output.map(function(val) {
+			return {
+				"name": val[0],
+				"kana": val[1],
+				"english": val[2],
+			}
+		});
+		return obj;
+	}
+});
+console.log(jsonObj);
+
 // save the contents of the file
 
 
